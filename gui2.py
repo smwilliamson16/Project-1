@@ -48,11 +48,14 @@ class GUI:
         self.answer_output.pack(pady=10)
         self.frame_answer.pack()
 
-        
+    #Gets values from the user input and converts to a list and then into floats.
+    #Uses formula module to calculate the numbers with selected operation
+    #Could not figure out how to get an exception to work for ZeroDivisionError
     def calculate(self):
         operator = self.radio_1.get()
         user_input = self.num_input.get()
         values = user_input.split(' ')
+
         try:
             values = [float(i) for i in values]
             if operator == 1:
@@ -63,7 +66,8 @@ class GUI:
                 self.answer_output.config(text=f"{' * '.join(str(x) for x in values)} = {formulas.multiply(values):.2f}")
             elif operator == 4:
                 self.answer_output.config(text=f"{' / '.join(str(x) for x in values)} = {formulas.divide(values):.2f}")
-        except ValueError:
+        except TypeError:
             self.answer_output.config(text=f'Please enter numbers')
         self.radio_1.set(0)
         self.num_input.delete(0, END)
+
