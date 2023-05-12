@@ -47,24 +47,23 @@ class GUI:
         self.answer_output = Label(self.frame_answer)
         self.answer_output.pack(pady=10)
         self.frame_answer.pack()
-        
-        #self.frame_answer.pack()shape = self.radio_1.get()
+
         
     def calculate(self):
         operator = self.radio_1.get()
         user_input = self.num_input.get()
         values = user_input.split(' ')
-        values = [float(i) for i in values]
-        
-        if operator == 1:
-            self.answer_output.config(text=f'{formulas.add(values):.2f}')
-        elif operator == 2:
-            self.answer_output.config(text=f'{formulas.subtract(values):.2f}')
-        elif operator == 3:
-            self.answer_output.config(text=f'{formulas.multiply(values):.2f}')
-        elif operator == 4:
-            self.answer_output.config(text=f'{formulas.divide(values):.2f}')
+        try:
+            values = [float(i) for i in values]
+            if operator == 1:
+                self.answer_output.config(text=f"{' + '.join(str(x) for x in values)} = {formulas.add(values):.2f}")
+            elif operator == 2:
+                self.answer_output.config(text=f"{' - '.join(str(x) for x in values)} = {formulas.subtract(values):.2f}")
+            elif operator == 3:
+                self.answer_output.config(text=f"{' * '.join(str(x) for x in values)} = {formulas.multiply(values):.2f}")
+            elif operator == 4:
+                self.answer_output.config(text=f"{' / '.join(str(x) for x in values)} = {formulas.divide(values):.2f}")
+        except ValueError:
+            self.answer_output.config(text=f'Please enter numbers')
         self.radio_1.set(0)
         self.num_input.delete(0, END)
-        
-        #self.answer_output.config(text=f'{total:.2}')
